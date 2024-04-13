@@ -11,13 +11,17 @@ import os
 try:
     from colorama import Fore, Style
 except ImportError:
-    if input("--> Module 'colorama' not found. Run 'pip3 install colorama' now? [Y/n] : ").lower() == "n":
-        print("Aborted.")
-        sys.exit()
-    else:
-        os.system("pip3 install --upgrade colorama")
-        print("Done, please rerun.")
-        sys.exit()
+    while True:
+        answer = input("--> Module 'colorama' not found. Run 'pip3 install colorama' now? [Y/n] : ").lower()
+        if answer == "n":
+            print("Aborted.")
+            sys.exit()
+        elif answer == 'y':
+            os.system("pip3 install --upgrade colorama")
+            print("Module installation complete. Please re-run.")
+            sys.exit()
+        else:
+            print("Invalid input. Answer with 'y' (yes) or 'n' (no).")
 
 
 # Parsing options with argv
@@ -44,9 +48,9 @@ os.system("") # for an unknown reason colors do not work without an 'os.system' 
 # Starting info
 print(
     Fore.BLUE, Style.BRIGHT, 
-    "\nCheck usage and report issues on Github: https://github.com/neek8044/NuitkaBuilder\n", 
+    "\n[i] Check usage and report issues on Github: https://github.com/neek8044/NuitkaBuilder", 
     Style.NORMAL, Fore.YELLOW, 
-    "\nNOTE: Linux requires 'patchelf' to be installed. You should install it with your package manager to use this program.\nYou may want to install 'ordered-set' with 'pip3 install ordered-set' for best compilation performance.",  
+    "\n\nNOTE: Linux requires 'patchelf' to be installed. You should install it with your package manager to use this program.\nYou may want to install 'ordered-set' with 'pip3 install ordered-set' for best compilation performance.",  
     Fore.BLUE, 
     "\n--> Building standalone for main.py", 
     Fore.RESET
@@ -81,11 +85,11 @@ timeout = 3
 
 # Code cannot be compiled as quickly as the timeout set, thus it must have failed. (might improve in the future)
 if end - start < timeout:
-    print(Fore.RED + "ERROR: Seems like an issue was encountered while building main.py.\nWhat to do:\n\t-> Make sure to have a 'main.py' file in this local folder.\n\t-> Make sure to have Nuitka installed in your Python3.\n\t-> If you are using Wine/Windows mode, check if Wine is installed and that you have Python 3 with Nuitka installed in Wine." + Fore.RESET)
+    print(Fore.RED + "ERROR: Unknown issue with building main.py.\nTroubleshooting:\n\t-> Make sure to have a 'main.py' file in this local folder.\n\t-> Make sure to have Nuitka installed in your Python3 installation.\n\t-> If you are using the Wine compatibility layer (Linux only), check if Wine is installed and that you have Python 3 with Nuitka installed inside of your default Wine config." + Fore.RESET)
 else:
-    print(Fore.GREEN + "\nFinished building main.py (./output/main.dist/)" + Fore.RESET)
+    print(Fore.GREEN + "\nFinished building main.py (stored in: ./output/main.dist/)" + Fore.RESET)
 
 
-input("\nPress ENTER to exit...\n")
+input("\nPress ENTER to exit...")
 sys.exit()
 
