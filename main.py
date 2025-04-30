@@ -12,17 +12,22 @@ try:
     from colorama import Fore, Style
 except ImportError:
     while True:
-        answer = input("--> Module 'colorama' not found. Run 'pip3 install colorama' now? [Y/n] : ").lower()
+        answer = input("--> Module 'colorama' not found. Run 'pip3 install colorama' now? [y/n] : ").lower()
         if answer == "n":
             print("Aborted.")
             sys.exit()
         elif answer == 'y':
-            os.system("pip3 install --upgrade colorama")
-            print("Module installation complete. Please re-run.")
-            sys.exit()
+            for cmd in ["pip", "pip3", "python -m pip", "python3 -m pip"]:
+                print(f"◼ Attempting intallation using {cmd}...")
+                if os.system(f"{cmd} install --upgrade colorama") == 0:
+                    break
+            else:
+                print("✖ Failed to install colorama. Please install it manually.")
+                sys.exit(1)
+            print("✔ Module installation complete. Please re-run.")
+            sys.exit(0)
         else:
             print("Invalid input. Answer with 'y' (yes) or 'n' (no).")
-
 
 # Parsing options with argv
 extras = []
@@ -40,10 +45,8 @@ if "--debug" in sys.argv or "-d" in sys.argv:
 
 extras = " ".join(extras)
 
-
 cwd = os.getcwd()
 os.system("") # for an unknown reason colors do not work without an 'os.system' command in specific terminals
-
 
 # Starting info
 print(
@@ -55,7 +58,6 @@ print(
     "\n--> Building standalone for main.py", 
     Fore.RESET
 )
-
 
 # Executing nuitka for compilation
 start = time.time()
@@ -70,7 +72,6 @@ nuitka = subprocess.Popen(
     stderr=subprocess.STDOUT
 )
 
-
 # Terminal animation
 anim_chars = ["\\", "|", "/", "-"]
 
@@ -78,7 +79,6 @@ while nuitka.poll() is None:
     for i in anim_chars:
         print("--> Please wait, compiling... " + i, " "*10 if wine else "", end="\r")
         time.sleep(0.1)
-
 
 end = time.time()
 timeout = 3
@@ -88,7 +88,6 @@ if end - start < timeout:
     print(Fore.RED + "ERROR: Unknown issue with building main.py.\nTroubleshooting:\n\t-> Make sure to have a 'main.py' file in this local folder.\n\t-> Make sure to have Nuitka installed in your Python3 installation.\n\t-> If you are using the Wine compatibility layer (Linux only), check if Wine is installed and that you have Python 3 with Nuitka installed inside of your default Wine config." + Fore.RESET)
 else:
     print(Fore.GREEN + "\nFinished building main.py (stored in: ./output/main.dist/)" + Fore.RESET)
-
 
 input("\nPress ENTER to exit...")
 sys.exit()
