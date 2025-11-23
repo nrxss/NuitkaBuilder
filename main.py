@@ -1,6 +1,6 @@
 # NuitkaBuilder
 # Author: Nick Roussis
-# Github: https://github.com/neek8044/NuitkaBuilder
+# Github: https://github.com/nrxss/NuitkaBuilder
 # License: Apache 2.0
 
 import subprocess
@@ -48,12 +48,12 @@ if "--debug" in sys.argv or "-d" in sys.argv:
 extras = " ".join(extras)
 
 cwd = os.getcwd()
-os.system("") # for an unknown reason colors do not work without an 'os.system' command in specific terminals
+os.system() # for an unknown reason colors do not work without an 'os.system()' command in old terminal apps like cmd.exe on Windows
 
 # Starting info
 print(
     Fore.BLUE, Style.BRIGHT, 
-    "\n[i] Check usage and report issues on Github: https://github.com/neek8044/NuitkaBuilder", 
+    "\n◈ - Check usage and report issues on Github: https://github.com/nrxss/NuitkaBuilder", 
     Style.NORMAL, Fore.YELLOW, 
     "\n\nNOTE: Linux requires 'patchelf' to be installed. You should install it with your package manager to use this program.\nYou may want to install 'ordered-set' with 'pip3 install ordered-set' for best compilation performance.",  
     Fore.BLUE, 
