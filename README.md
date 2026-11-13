@@ -28,7 +28,7 @@ NuitkaBuilder is a python script used in the terminal that runs the appropriate 
     python3 nuitkabuilder.py -o -r
     ```
 
-The project is Work-In-Progress and more compilation options will be added.
+The project is Work-In-Progress and more compilation options will be added. (biggest lie of all time)
 
 ---
 
